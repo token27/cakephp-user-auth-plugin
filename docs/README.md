@@ -82,3 +82,44 @@ $config['UserAuth']['connection'] = 'custom'; // Defaults to 'default'
 You can test endpoints with a Postman.
 File: `you-app-path/src/vendor/token27/cakephp-user-auth-plugin/docs/postman.json`
 (You must modify the enviroment vars from postman domain, username, etc..)
+
+
+# Responses
+
+## Login
+```
+{
+    "status": 1,
+    "message": "Ok.",
+    "success": "Login Successfully.",
+    "login": {
+        "id": "fcd7afe0-9ecd-40f1-ba7a-b3fc18bc3e76",
+        "username": "superadmin",
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhbGciOiJIUzI1NiIsImlkIjoiZmNkN2FmZTAtOWVjZC00MGYxLWJhN2EtYjNmYzE4YmMzZTc2IiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwic3ViIjoiZmNkN2FmZTAtOWVjZC00MGYxLWJhN2EtYjNmYzE4YmMzZTc2IiwiaWF0IjoxNjEzNDY2MTczLCJleHAiOjE2MTM1NTI1NzN9.6_IuOtuQnADrXxSIRaTOOFqCvsflI36O41405GIgY3Y"
+    }
+}
+```
+
+## Token Verify
+```
+{
+    "status": 1,
+    "message": "Token successfully.",
+    "payload": {
+        "alg": "HS256",
+        "id": "fcd7afe0-9ecd-40f1-ba7a-b3fc18bc3e76",
+        "username": "superadmin",
+        "sub": "fcd7afe0-9ecd-40f1-ba7a-b3fc18bc3e76",
+        "iat": 1613466173,
+        "exp": 1613552573
+    }
+}
+```
+
+### Others
+```
+{
+    "status": 1,
+    "message": "Ok.",    
+}
+```

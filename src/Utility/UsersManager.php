@@ -12,7 +12,6 @@ use Cake\Controller\Component;
 use Cake\Controller\ComponentRegistry;
 
 # PLUGIN 
-use UsersNotifications\Controller\Component\TwilioComponent;
 
 /**
  * Notifier component

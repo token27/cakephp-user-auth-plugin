@@ -125,18 +125,23 @@ class UserAuthShell extends Shell {
             $password = '1234';
         }
 
-        if ($role_name) {
-            $role_name = Text::slug($role_name);
-            $role_database = $this->Roles->getRole($role_name);
-            if ($role_database) {
-                $role_id = $role_database['id'];
-            } else {
-                $role_added = $this->Roles->addRole($data_role);
-                if ($role_added) {
-                    $role_id = $role_added->id;
-                }
+        if (!$role_name || $role_name === "") {
+            $role_name = "basic";
+        }
+        $role_name = Text::slug($role_name);
+        $role_database = $this->Roles->getRole($role_name);
+        if ($role_database) {
+            $role_id = $role_database['id'];
+        } else {
+            $data_role = [
+                'name' => $role_name
+            ];
+            $role_added = $this->Roles->addRole($data_role);
+            if ($role_added) {
+                $role_id = $role_added->id;
             }
         }
+
 
         $this->hr();
         $this->out(__('Creating username "' . $username . '" ...'), 1, Shell::QUIET);

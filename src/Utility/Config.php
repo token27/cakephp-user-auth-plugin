@@ -13,10 +13,10 @@ class Config {
     }
 
     public static function loadPluginConfiguration() {
-        if (file_exists(ROOT . DS . 'config' . DS . 'app_users_authentication.php')) {
-            Configure::load('app_users_authentication');
+        if (file_exists(ROOT . DS . 'config' . DS . 'app_user_auth.php')) {
+            Configure::load('app_user_auth');
         } else {
-            Configure::load('UserAuth.app_users_authentication');
+            Configure::load('UserAuth.app_user_auth');
         }
     }
 

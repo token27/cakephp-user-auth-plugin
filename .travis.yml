@@ -1,0 +1,21 @@
+language: php
+
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+
+services:
+  - mysql
+
+before_script:
+  - composer self-update
+  - composer install --prefer-dist
+  - mysql -uroot -e "DROP DATABASE IF EXISTS cake_user_auth_test; CREATE DATABASE cake_user_auth_test;"
+
+script:
+  - composer check
+
+after_success:
+  - cake plugin load UserAuth
+  - cake migrations migrate -p UserAuth

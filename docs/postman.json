@@ -1,515 +1,515 @@
 {
-	"info": {
-		"_postman_id": "d3a0be30-55f4-4809-937b-2a7b4c10a52f",
-		"name": "CakePHP User Auth Plugin",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "Users",
-			"item": [
-				{
-					"name": "Superadmin",
-					"item": [
-						{
-							"name": "List",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": []
-								},
-								"url": {
-									"raw": "http://www.{{domain}}/user-auth/users/list/?token={{user_token}}",
-									"protocol": "http",
-									"host": [
-										"www",
-										"{{domain}}"
-									],
-									"path": [
-										"user-auth",
-										"users",
-										"list",
-										""
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{user_token}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Add",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "username",
-											"value": "mixture",
-											"type": "text"
-										},
-										{
-											"key": "password",
-											"value": "m1x7ur3",
-											"type": "text"
-										},
-										{
-											"key": "role_id",
-											"value": "superadmin",
-											"type": "text"
-										}
-									]
-								},
-								"url": {
-									"raw": "http://www.{{domain}}/user-auth/users/add/?token={{user_token}}",
-									"protocol": "http",
-									"host": [
-										"www",
-										"{{domain}}"
-									],
-									"path": [
-										"user-auth",
-										"users",
-										"add",
-										""
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{user_token}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Remove",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "username",
-											"value": "username_to_remove",
-											"type": "text"
-										}
-									]
-								},
-								"url": {
-									"raw": "http://www.{{domain}}/user-auth/users/remove/?token={{user_token}}",
-									"protocol": "http",
-									"host": [
-										"www",
-										"{{domain}}"
-									],
-									"path": [
-										"user-auth",
-										"users",
-										"remove",
-										""
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{user_token}}"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Login",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "username",
-									"value": "{{username}}",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "{{password}}",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://www.{{domain}}/user-auth/users/login",
-							"protocol": "http",
-							"host": [
-								"www",
-								"{{domain}}"
-							],
-							"path": [
-								"user-auth",
-								"users",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Token Verify",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "token",
-									"value": "{{user_token}}",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://www.{{domain}}/user-auth/users/token",
-							"protocol": "http",
-							"host": [
-								"www",
-								"{{domain}}"
-							],
-							"path": [
-								"user-auth",
-								"users",
-								"token"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Logout",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "http://www.{{domain}}/user-auth/users/logout",
-							"protocol": "http",
-							"host": [
-								"www",
-								"{{domain}}"
-							],
-							"path": [
-								"user-auth",
-								"users",
-								"logout"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Roles",
-			"item": [
-				{
-					"name": "List",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "http://www.{{domain}}/user-auth/roles/list/?token={{user_token}}",
-							"protocol": "http",
-							"host": [
-								"www",
-								"{{domain}}"
-							],
-							"path": [
-								"user-auth",
-								"roles",
-								"list",
-								""
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "{{user_token}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Add",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "webmaster",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://www.{{domain}}/user-auth/roles/add/?token={{user_token}}",
-							"protocol": "http",
-							"host": [
-								"www",
-								"{{domain}}"
-							],
-							"path": [
-								"user-auth",
-								"roles",
-								"add",
-								""
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "{{user_token}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Remove",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "role_id",
-									"value": "role_name_or_id_to_remove",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://www.{{domain}}/user-auth/roles/remove/?token={{user_token}}",
-							"protocol": "http",
-							"host": [
-								"www",
-								"{{domain}}"
-							],
-							"path": [
-								"user-auth",
-								"roles",
-								"remove",
-								""
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "{{user_token}}"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Permissions",
-			"item": [
-				{
-					"name": "List",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "http://www.{{domain}}/user-auth/permissions/list/?token={{user_token}}",
-							"protocol": "http",
-							"host": [
-								"www",
-								"{{domain}}"
-							],
-							"path": [
-								"user-auth",
-								"permissions",
-								"list",
-								""
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "{{user_token}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Add",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "http://www.{{domain}}/user-auth/permissions/add/?token={{user_token}}",
-							"protocol": "http",
-							"host": [
-								"www",
-								"{{domain}}"
-							],
-							"path": [
-								"user-auth",
-								"permissions",
-								"add",
-								""
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "{{user_token}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Remove",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "permission_id",
-									"value": "permission_id_to_remove",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://www.{{domain}}/user-auth/roles/remove/?token={{user_token}}",
-							"protocol": "http",
-							"host": [
-								"www",
-								"{{domain}}"
-							],
-							"path": [
-								"user-auth",
-								"roles",
-								"remove",
-								""
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "{{user_token}}"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				}
-			]
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "domain",
-			"value": "localhost"
-		},
-		{
-			"key": "username",
-			"value": "superadmin"
-		},
-		{
-			"key": "password",
-			"value": "1234"
-		},
-		{
-			"key": "role_name",
-			"value": "superadmin"
-		},
-		{
-			"key": "role_id",
-			"value": ""
-		},
-		{
-			"key": "user_token",
-			"value": ""
-		}
-	]
+    "info": {
+        "_postman_id": "d3a0be30-55f4-4809-937b-2a7b4c10a52f",
+        "name": "CakePHP User Token Auth and ACL Plugin",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Users",
+            "item": [
+                {
+                    "name": "Superadmin",
+                    "item": [
+                        {
+                            "name": "List",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "formdata",
+                                    "formdata": []
+                                },
+                                "url": {
+                                    "raw": "http://www.{{domain}}/user-auth/users/list/?token={{user_token}}",
+                                    "protocol": "http",
+                                    "host": [
+                                        "www",
+                                        "{{domain}}"
+                                    ],
+                                    "path": [
+                                        "user-auth",
+                                        "users",
+                                        "list",
+                                        ""
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{user_token}}"
+                                        }
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Add",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "formdata",
+                                    "formdata": [
+                                        {
+                                            "key": "username",
+                                            "value": "mixture",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "key": "password",
+                                            "value": "m1x7ur3",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "key": "role_id",
+                                            "value": "superadmin",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                "url": {
+                                    "raw": "http://www.{{domain}}/user-auth/users/add/?token={{user_token}}",
+                                    "protocol": "http",
+                                    "host": [
+                                        "www",
+                                        "{{domain}}"
+                                    ],
+                                    "path": [
+                                        "user-auth",
+                                        "users",
+                                        "add",
+                                        ""
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{user_token}}"
+                                        }
+                                    ]
+                                }
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Remove",
+                            "request": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "formdata",
+                                    "formdata": [
+                                        {
+                                            "key": "username",
+                                            "value": "username_to_remove",
+                                            "type": "text"
+                                        }
+                                    ]
+                                },
+                                "url": {
+                                    "raw": "http://www.{{domain}}/user-auth/users/remove/?token={{user_token}}",
+                                    "protocol": "http",
+                                    "host": [
+                                        "www",
+                                        "{{domain}}"
+                                    ],
+                                    "path": [
+                                        "user-auth",
+                                        "users",
+                                        "remove",
+                                        ""
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{user_token}}"
+                                        }
+                                    ]
+                                }
+                            },
+                            "response": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Login",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "username",
+                                    "value": "{{username}}",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "password",
+                                    "value": "{{password}}",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "http://www.{{domain}}/user-auth/users/login",
+                            "protocol": "http",
+                            "host": [
+                                "www",
+                                "{{domain}}"
+                            ],
+                            "path": [
+                                "user-auth",
+                                "users",
+                                "login"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Token Verify",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "token",
+                                    "value": "{{user_token}}",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "http://www.{{domain}}/user-auth/users/token",
+                            "protocol": "http",
+                            "host": [
+                                "www",
+                                "{{domain}}"
+                            ],
+                            "path": [
+                                "user-auth",
+                                "users",
+                                "token"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Logout",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": []
+                        },
+                        "url": {
+                            "raw": "http://www.{{domain}}/user-auth/users/logout",
+                            "protocol": "http",
+                            "host": [
+                                "www",
+                                "{{domain}}"
+                            ],
+                            "path": [
+                                "user-auth",
+                                "users",
+                                "logout"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Roles",
+            "item": [
+                {
+                    "name": "List",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": []
+                        },
+                        "url": {
+                            "raw": "http://www.{{domain}}/user-auth/roles/list/?token={{user_token}}",
+                            "protocol": "http",
+                            "host": [
+                                "www",
+                                "{{domain}}"
+                            ],
+                            "path": [
+                                "user-auth",
+                                "roles",
+                                "list",
+                                ""
+                            ],
+                            "query": [
+                                {
+                                    "key": "token",
+                                    "value": "{{user_token}}"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Add",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "name",
+                                    "value": "webmaster",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "http://www.{{domain}}/user-auth/roles/add/?token={{user_token}}",
+                            "protocol": "http",
+                            "host": [
+                                "www",
+                                "{{domain}}"
+                            ],
+                            "path": [
+                                "user-auth",
+                                "roles",
+                                "add",
+                                ""
+                            ],
+                            "query": [
+                                {
+                                    "key": "token",
+                                    "value": "{{user_token}}"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Remove",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "role_id",
+                                    "value": "role_name_or_id_to_remove",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "http://www.{{domain}}/user-auth/roles/remove/?token={{user_token}}",
+                            "protocol": "http",
+                            "host": [
+                                "www",
+                                "{{domain}}"
+                            ],
+                            "path": [
+                                "user-auth",
+                                "roles",
+                                "remove",
+                                ""
+                            ],
+                            "query": [
+                                {
+                                    "key": "token",
+                                    "value": "{{user_token}}"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Permissions",
+            "item": [
+                {
+                    "name": "List",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": []
+                        },
+                        "url": {
+                            "raw": "http://www.{{domain}}/user-auth/permissions/list/?token={{user_token}}",
+                            "protocol": "http",
+                            "host": [
+                                "www",
+                                "{{domain}}"
+                            ],
+                            "path": [
+                                "user-auth",
+                                "permissions",
+                                "list",
+                                ""
+                            ],
+                            "query": [
+                                {
+                                    "key": "token",
+                                    "value": "{{user_token}}"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Add",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": []
+                        },
+                        "url": {
+                            "raw": "http://www.{{domain}}/user-auth/permissions/add/?token={{user_token}}",
+                            "protocol": "http",
+                            "host": [
+                                "www",
+                                "{{domain}}"
+                            ],
+                            "path": [
+                                "user-auth",
+                                "permissions",
+                                "add",
+                                ""
+                            ],
+                            "query": [
+                                {
+                                    "key": "token",
+                                    "value": "{{user_token}}"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Remove",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "permission_id",
+                                    "value": "permission_id_to_remove",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "http://www.{{domain}}/user-auth/roles/remove/?token={{user_token}}",
+                            "protocol": "http",
+                            "host": [
+                                "www",
+                                "{{domain}}"
+                            ],
+                            "path": [
+                                "user-auth",
+                                "roles",
+                                "remove",
+                                ""
+                            ],
+                            "query": [
+                                {
+                                    "key": "token",
+                                    "value": "{{user_token}}"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ],
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                            ""
+                        ]
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                            ""
+                        ]
+                    }
+                }
+            ]
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        }
+    ],
+    "variable": [
+        {
+            "key": "domain",
+            "value": "user-auth.localhost"
+        },
+        {
+            "key": "username",
+            "value": "superadmin"
+        },
+        {
+            "key": "password",
+            "value": "1234"
+        },
+        {
+            "key": "role_name",
+            "value": "superadmin"
+        },
+        {
+            "key": "role_id",
+            "value": ""
+        },
+        {
+            "key": "user_token",
+            "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhbGciOiJIUzI1NiIsImlkIjoiZmNkN2FmZTAtOWVjZC00MGYxLWJhN2EtYjNmYzE4YmMzZTc2IiwidXNlcm5hbWUiOiJzdXBlcmFkbWluIiwic3ViIjoiZmNkN2FmZTAtOWVjZC00MGYxLWJhN2EtYjNmYzE4YmMzZTc2IiwiaWF0IjoxNjEzNDY2MTczLCJleHAiOjE2MTM1NTI1NzN9.6_IuOtuQnADrXxSIRaTOOFqCvsflI36O41405GIgY3Y"
+        }
+    ]
 }
