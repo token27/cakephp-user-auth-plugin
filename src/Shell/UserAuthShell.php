@@ -7,18 +7,19 @@ namespace UserAuth\Shell;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Shell;
 use Cake\Core\Configure;
-use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\DatasourceException\RecordNotFoundException;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\Number;
 use Cake\Log\Log;
-use Cake\ORM\Exception\PersistenceFailedException;
+use Cake\ORMException\PersistenceFailedException;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 use RuntimeException;
+use Exception;
 use Throwable;
 
-# PLUGIN 
-
+# PLUGIN
+use UserAuth\Utility\Config;
 
 declare(ticks=1);
 
@@ -79,9 +80,10 @@ class UserAuthShell extends Shell {
      */
     public function initialize(): void {
         parent::initialize();
-        $this->loadModel('UserAuth.Users');
-        $this->loadModel('UserAuth.Roles');
-        $this->loadModel('UserAuth.Permissions');
+        Config::loadPluginConfiguration();
+        $this->loadModel(Config::defaultUserModel());
+        $this->loadModel(Config::defaultRoleModel());
+        $this->loadModel(Config::defaultPermissionModel());
     }
 
     /**
@@ -114,7 +116,6 @@ class UserAuthShell extends Shell {
 
         if (!$username) {
             $username = 'superadmin';
-            $password = '1234';
         }
         if ($username == 'superadmin') {
             $role_name = 'superadmin';
@@ -158,22 +159,106 @@ class UserAuthShell extends Shell {
                 $data_user['role_id'] = $role_id;
             }
             $user_database = $this->Users->addUser($data_user);
-        } catch (\Exception $e) {
-            
+
+
+            if ($user_database['status'] == 1) {
+                $this->out(__('The username has been created !'), 1, Shell::QUIET);
+                $this->out(__('Role Id: ' . $role_id), 1, Shell::QUIET);
+                $this->out(__('Role Name: ' . $role_name), 1, Shell::QUIET);
+                $this->out(__('Role Rank: ' . $role_rank), 1, Shell::QUIET);
+                $this->hr();
+                $this->out(__('Username: ' . $username), 1, Shell::QUIET);
+                $this->out(__('Password: ' . $password), 1, Shell::QUIET);
+                $this->out(__('Status: ' . $status), 1, Shell::QUIET);
+                $this->hr();
+            } else {
+                $this->out(__('The username cannot be been created.'), 1, Shell::QUIET);
+            }
+        } catch (Throwable $t) {
+            $this->out(__('The username cannot be been created.'), 1, Shell::QUIET);
+            $this->out($t->getMessage(), 1, Shell::QUIET);
+        } catch (Exception $e) {
+            $this->out(__('The username cannot be been created.'), 1, Shell::QUIET);
+            $this->out($e->getMessage(), 1, Shell::QUIET);
+        }
+        $this->hr();
+    }
+
+    /**
+     * Create superadmin user
+     *
+     * @access public
+     */
+    public function superadmin() {
+        $role_added = false;
+
+        $username = 'superadmin';
+        $password = isset($this->params['password']) ? $this->params['password'] : false;
+        $role_name = 'superadmin';
+        $role_id = null;
+
+        $status = intval($this->params['status']);
+        $force = 1;
+
+        $user_database = null;
+        if (!$password) {
+            $password = '1234';
         }
 
-        if ($user_database['status'] == 1) {
-            $this->out(__('The username has been created !'), 1, Shell::QUIET);
-            $this->out(__('Role Id: ' . $role_id), 1, Shell::QUIET);
-            $this->out(__('Role Name: ' . $role_name), 1, Shell::QUIET);
-            $this->out(__('Role Rank: ' . $role_rank), 1, Shell::QUIET);
-            $this->hr();
-            $this->out(__('Username: ' . $username), 1, Shell::QUIET);
-            $this->out(__('Password: ' . $password), 1, Shell::QUIET);
-            $this->out(__('Status: ' . $status), 1, Shell::QUIET);
-            $this->hr();
+        $role_database = $this->Roles->getRole($role_name);
+        if ($role_database) {
+            $role_id = $role_database['id'];
         } else {
-            $this->out(__('The username cannot be been created.'), 1, Shell::QUIET);
+            $data_role = [
+                'name' => $role_name
+            ];
+            $role_added = $this->Roles->addRole($data_role);
+            if ($role_added) {
+                $role_id = $role_added->id;
+            }
+        }
+
+        if ($role_id) {
+
+            $this->hr();
+            $this->out(__('Creating superadmin username ...'), 1, Shell::QUIET);
+            $this->hr();
+
+            try {
+                $data_user = [
+                    'role_id' => $role_id,
+                    'username' => $username,
+                    'password' => $password,
+                    'status' => 1,
+                ];
+
+                $user_database = $this->Users->getUser('superadmin');
+                if (!$user_database) {
+                    $user_database = $this->Users->addUser($data_user);
+                    if ($user_database['status'] == 1) {
+                        $this->out(__('The username has been created !'), 1, Shell::QUIET);
+                        $this->out(__('Role Id: ' . $role_id), 1, Shell::QUIET);
+                        $this->out(__('Role Name: ' . $role_name), 1, Shell::QUIET);
+                        $this->hr();
+                        $this->out(__('Username: ' . $username), 1, Shell::QUIET);
+                        $this->out(__('Password: ' . $password), 1, Shell::QUIET);
+                        $this->out(__('Status: ' . $status), 1, Shell::QUIET);
+                        $this->hr();
+                    } else {
+                        $this->out(__('The username superadmin cannot be been created.'), 1, Shell::QUIET);
+                    }
+                } else {
+                    $this->out(__('The username superadmin already exist in the database.'), 1, Shell::QUIET);
+                }
+            } catch (Throwable $t) {
+                $this->out(__('The username cannot be been created.'), 1, Shell::QUIET);
+                $this->out($t->getMessage(), 1, Shell::QUIET);
+            } catch (Exception $e) {
+                $this->out(__('The username cannot be been created.'), 1, Shell::QUIET);
+                $this->out($e->getMessage(), 1, Shell::QUIET);
+            }
+        } else {
+            $this->out(__('Error while try to create superadmin role.'), 1, Shell::QUIET);
         }
         $this->hr();
     }

@@ -6,7 +6,7 @@
 composer require token27/cakephp-user-auth-plugin
 ```
 
-## Load the plugin
+### Load the plugin
 If you prefer load the plugin from command CLI:
 ```sh
 bin/cake plugin load UserAuth
@@ -22,15 +22,130 @@ If you want to also access the backend controller (not just using CLI), you need
 $this->addPlugin('UserAuth', ['routes' => true]);
 ```
 
-## Create database plugin schema
+### Create database plugin schema
 Run the following command in the CakePHP console to create the tables using the Migrations plugin:
 ```sh
 bin/cake migrations migrate -p UserAuth
 ```
 
+### Create users
+
+Superadmin user
+```sh
+bin/cake UserAuth superadmin -p <password>
+```
+
+Other user
+```sh
+bin/cake UserAuth add -u <username> -p <password> -r <role_id/name>
+```
+
 ## Configuration
 
+### Edit your `you-app-path/src/Controller/AppController.php` 
+
+```
+use Throwable;
+use Exception;
+use UserAuth\Utility\Config;
+use Cake\Event\EventInterface;
+
+class AppController extends Controller {
+
+    public function initialize(): void {
+        parent::initialize();
+
+        ....
+        // Load other components here
+
+        $this->loadComponent('Auth', [
+            'loginAction' => [
+                'plugin' => 'UserAuth',
+                'controller' => 'Home',
+                'action' => 'notallowed'
+            ],
+            'loginRedirect' => [
+                'plugin' => 'UserAuth',
+                'controller' => 'Home',
+                'action' => 'welcome'
+            ],
+            'logoutRedirect' => [
+                'plugin' => 'UserAuth',
+                'controller' => 'Home',
+                'action' => 'index'
+            ],
+            'authorize' => [
+                'UserAuth.Roles' => [
+                    'debug' => true,
+                    'authorizeAll' => false,
+                ]
+            ],
+            'authenticate' => [
+                'Form' => [
+                    'userModel' => Config::defaultUserModel(),
+                    'scope' => [
+                        Config::defaultUserModel() . '.status' => 1
+                    ]
+                ],
+                'UserAuth.Token' => [
+                    'userModel' => Config::defaultUserModel(),
+                    'parameter' => 'token',
+                    'scope' => [
+                        Config::defaultUserModel() . '.status' => 1
+                    ],
+                    'fields' => [
+                        'username' => 'id'
+                    ],
+                    'queryDatasource' => true,
+                    'unauthenticatedException' => null 
+                ]
+            ],
+            'unauthorizedRedirect' => true,
+            'checkAuthIn' => 'Controller.initialize'
+        ]);
+    }
+
+    /**
+     * 
+     * @param \Cake\Event\EventInterface $event
+     */
+    public function beforeFilter(EventInterface $event) {
+        parent::beforeFilter($event);
+        $this->Auth->startup($event);
+    }
+```
+
+### Setup ACL
+
+Allow action in controller
+```
+class ExampleController extends AppController {
+
+    public function initialize(): void {
+        parent::initialize();
+        $this->Auth->allow(['display']);
+    }
+
+    public function display() {
+        // This functions is allowed without ALC verification
+    }
+}
+```
+
+Add role from command CLI:
+
+```sh
+bin/cake UserAuth role add <role-name>
+```
+
+Add permission from command CLI:
+
+```sh
+bin/cake UserAuth permission add --plugin <plugin-name> --controller <controller-name> --action <action-name> --allowed <status>
+```
+
 ### App configuration
+
 Disable/Enable Cross Site Request Forgery (CSRF) Protection Middleware.
 You must modify the file called `you-app-path/src/Application.php`.
 Comment this lines:
@@ -116,7 +231,7 @@ File: `you-app-path/src/vendor/token27/cakephp-user-auth-plugin/docs/postman.jso
 }
 ```
 
-### Others
+### Ok
 ```
 {
     "status": 1,

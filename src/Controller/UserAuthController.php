@@ -46,51 +46,69 @@ class UserAuthController extends AppController {
         /**
          * Auth Component
          */
-        $this->loadComponent('Auth', [
-            'loginAction' => [
+        if (!$this->_isComponentLoaded()) {
+            $this->loadComponent('Auth', [
+                'loginAction' => [
 //                'plugin' => 'UserAuth',
-                'controller' => 'Home',
-                'action' => 'notallowed'
-            ],
-            'loginRedirect' => [
+                    'controller' => 'Home',
+                    'action' => 'notallowed'
+                ],
+                'loginRedirect' => [
 //                'plugin' => 'UserAuth',
-                'controller' => 'Home',
-                'action' => 'welcome'
-            ],
-            'logoutRedirect' => [
+                    'controller' => 'Home',
+                    'action' => 'welcome'
+                ],
+                'logoutRedirect' => [
 //                'plugin' => 'UserAuth',
-                'controller' => 'Home',
-                'action' => 'index'
-            ],
-            'authorize' => [
-                'UserAuth.Roles' => [
-                    'debug' => true,
-                    'authorizeAll' => false,
-                ]
-            ],
-            'authenticate' => [
-                'Form' => [
-                    'userModel' => Config::defaultUserModel(),
-                    'scope' => [
-                        Config::defaultUserModel() . '.status' => 1
+                    'controller' => 'Home',
+                    'action' => 'index'
+                ],
+                'authorize' => [
+                    'UserAuth.Roles' => [
+                        'debug' => true,
+                        'authorizeAll' => false,
                     ]
                 ],
-                'UserAuth.Token' => [
-                    'userModel' => Config::defaultUserModel(),
-                    'parameter' => 'token',
-                    'scope' => [
-                        Config::defaultUserModel() . '.status' => 1
+                'authenticate' => [
+                    'Form' => [
+                        'userModel' => Config::defaultUserModel(),
+                        'scope' => [
+                            Config::defaultUserModel() . '.status' => 1
+                        ]
                     ],
-                    'fields' => [
-                        'username' => 'id'
-                    ],
-                    'queryDatasource' => true,
-                    'unauthenticatedException' => null // with null redirect is activated
-                ]
-            ],
-            'unauthorizedRedirect' => true,
-            'checkAuthIn' => 'Controller.initialize'
-        ]);
+                    'UserAuth.Token' => [
+                        'userModel' => Config::defaultUserModel(),
+                        'parameter' => 'token',
+                        'scope' => [
+                            Config::defaultUserModel() . '.status' => 1
+                        ],
+                        'fields' => [
+                            'username' => 'id'
+                        ],
+                        'queryDatasource' => true,
+                        'unauthenticatedException' => null // with null redirect is activated
+                    ]
+                ],
+                'unauthorizedRedirect' => true,
+                'checkAuthIn' => 'Controller.initialize'
+            ]);
+        }
+    }
+
+    private function _isComponentLoaded() {
+        try {
+            $components = $this->components();
+            if (!empty($components)) {
+                if (isset($components->Auth)) {
+                    return true;
+                }
+            }
+        } catch (Throwable $t) {
+            
+        } catch (Exception $e) {
+            
+        }
+        return false;
     }
 
     /**
@@ -134,10 +152,16 @@ class UserAuthController extends AppController {
         }
         if ($user && !empty($user)) {
             if (isset($user['role_id']) && $user['role_id'] && $user['role_id'] != "") {
-//                $role_database = $this->InstagramGrowth->DatabaseRoles->getRole($user['role_id']);
-//                if ($role_database) {
-//                    $role = $role_database;
-//                }
+                try {
+                    $role_database = $this->Roles->getRole($user['role_id']);
+                    if ($role_database) {
+                        $role = $role_database;
+                    }
+                } catch (Throwable $t) {
+                    
+                } catch (Exception $e) {
+                    
+                }
             }
         }
         return $role;
