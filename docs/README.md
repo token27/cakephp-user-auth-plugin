@@ -1,4 +1,4 @@
-# CakePHP Users Authentication Plugin Documentation
+# CakePHP Users Token Authentication and Roles Authorize (ACL) Plugin 
 
 
 ## Installation
