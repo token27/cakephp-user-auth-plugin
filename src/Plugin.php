@@ -2,6 +2,8 @@
 
 namespace UserAuth;
 
+# CAKEPHP
+
 use Cake\Core\BasePlugin;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
@@ -22,7 +24,7 @@ use UserAuth\Routing\Middleware\CorsMiddleware;
 use Psr\Http\Server\MiddlewareInterface;
 
 /**
- * Plugin for Queue
+ * Plugin for User Authentication and ACL
  */
 class Plugin extends BasePlugin {
     /**

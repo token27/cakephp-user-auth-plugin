@@ -74,7 +74,7 @@ class UsersController extends UserAuthController {
             'message' => __('Silence is golden.'),
         ];
 
-        $role = null;
+        $role_name = "-";
         $role_id = null;
 
         $user = null;
@@ -107,24 +107,26 @@ class UsersController extends UserAuthController {
                 $key = Security::getSalt();
                 $iat = time();
                 $expire_at = time() + 86400;
-                $role_id = isset($user['role_id']) ? $user['role_id'] : null;
+//                $role_id = isset($user['role_id']) ? $user['role_id'] : null;
 //                if ($role_id && $role_id != "") {
 //                    $role_database = $this->Roles->getRole($role_id);
 //                    if ($role_database) {
-//                        $role = $role_database['name'];
+//                        $role_name = $role_database['name'];
 //                    }
 //                }
 
-                $token = JWT::encode([
-                            'alg' => 'HS256',
-                            'id' => $user['id'],
-                            'username' => $user['username'],
-//                            'role' => $role,
-                            'sub' => $user['id'],
-                            'iat' => $iat,
-                            'exp' => $expire_at,
-                                ],
-                                $key);
+                $token_data = [
+                    'alg' => 'HS256',
+                    'id' => $user['id'],
+                    'username' => $user['username'],
+//                    'role' => $role_name,
+                    'sub' => $user['id'],
+                    'iat' => $iat,
+                    'exp' => $expire_at,
+                ];
+
+
+                $token = JWT::encode($token_data, $key);
 
                 $response = [
                     'status' => 1,
@@ -134,9 +136,15 @@ class UsersController extends UserAuthController {
                         'id' => $user['id'],
                         'username' => $user['username'],
                         'token' => $token,
-//                        'role_id' => $role_id,
-//                        'role' => $role,
                     ],
+                ];
+
+                $this->Users->updateUserToken($user['id'], $token, $expire_at);
+            } catch (Throwable $t) {
+                $response = [
+                    'status' => 0,
+                    'message' => __('Something wrong, please try again later...'),
+                    'error' => $t->getMessage(),
                 ];
             } catch (Exception $e) {
                 $response = [

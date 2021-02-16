@@ -356,6 +356,11 @@ class UsersTable extends Table {
         return $response;
     }
 
+    /**
+     * 
+     * @param string $userId
+     * @return boolean
+     */
     public function deleteId(string $userId) {
         $deleted = false;
         $entity = null;
@@ -376,6 +381,76 @@ class UsersTable extends Table {
             }
         }
         return $deleted;
+    }
+
+    /**
+     * Update user 
+     * 
+     * @param string $user_id
+     * @param array $params
+     * @return boolean
+     */
+    public function updateUser(string $user_id, array $params) {
+        $updated = false;
+        $params['modified'] = new FrozenTime();
+
+        try {
+            $updated = $this->query()
+                    ->update()
+                    ->set($params)
+                    ->where(['id' => $user_id])
+                    ->execute();
+        } catch (Throwable $t) {
+            $updated = false;
+        } catch (Exception $ex) {
+            $updated = false;
+        }
+
+        return $updated;
+    }
+
+    /**
+     * Update user token 
+     * 
+     * @param string $user_id
+     * @param string $token
+     * @param type $token_expire
+     * @return type
+     */
+    public function updateUserToken(string $user_id, string $token, $token_expires = null) {
+        $params = [
+            'token' => $token,
+        ];
+        if ($token_expires && $token_expires !== "") {
+            $params['token_expires'] = $token_expires;
+        }
+        return $this->updateUser($user_id, $params);
+    }
+
+    /**
+     * Get user by Token
+     * 
+     * @param string $token The user id/username from database
+     * @return \UserAuth\Model\Entity\User|null
+     */
+    public function getUserByToken(string $token) {
+
+        $user = [];
+        $conditions = [
+            'token' => $token,
+        ];
+
+        $user_database = $this->find()
+                ->where($conditions)
+                ->orderDesc('modified')
+                ->enableHydration(false)
+                ->first();
+
+        if ($user_database) {
+            $user = $user_database->toArray();
+        }
+
+        return $user;
     }
 
 }

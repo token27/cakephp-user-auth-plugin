@@ -225,10 +225,14 @@ class UserAuthShell extends Shell {
             $this->hr();
 
             try {
+
                 $data_user = [
                     'role_id' => $role_id,
+                    'first_name' => 'Superadmin',
+                    'last_name' => 'Owner',
                     'username' => $username,
                     'password' => $password,
+                    'is_superuser' => 1,
                     'status' => 1,
                 ];
 
