@@ -3,7 +3,7 @@
 
 ## Installation
 ```
-composer require token27/cakephp-users-authentication
+composer require token27/cakephp-user-auth-plugin
 ```
 
 ## Load the plugin
