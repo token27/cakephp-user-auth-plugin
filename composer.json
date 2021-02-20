@@ -27,7 +27,8 @@
         "cakephp/cakephp-codesniffer": "2.*"
     },
     "support": {
-        "source": "https://github.com/token27/cakephp-user-auth-plugin"
+        "source": "https://github.com/token27/cakephp-user-auth-plugin",
+        "issues": "https://github.com/token27/cakephp-user-auth-plugin/issues"
     },
     "autoload": {
         "psr-4": {
